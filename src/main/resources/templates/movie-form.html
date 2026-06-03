@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление фильма</title>
+</head>
+
+<body>
+
+<h1>Добавить фильм</h1>
+
+<form th:action="@{/movies}"
+      th:object="${movie}"
+      method="post">
+
+    <input type="hidden" th:field="*{id}">
+
+    <div>
+        <label>Название:</label>
+        <input type="text" th:field="*{title}">
+    </div>
+
+    <div>
+        <label>Год:</label>
+        <input type="number" th:field="*{year}">
+    </div>
+
+    <div>
+        <label>Режиссер:</label>
+        <input type="text" th:field="*{director}">
+    </div>
+
+    <div>
+        <label>Главные актеры:</label>
+        <input type="text" th:field="*{actors}">
+    </div>
+
+    <div>
+        <label>Описание:</label>
+        <textarea th:field="*{description}"></textarea>
+    </div>
+
+    <div>
+        <label>Жанр:</label>
+
+        <select th:field="*{genre}">
+            <option th:each="genre : ${genres}"
+                    th:value="${genre.id}"
+                    th:text="${genre.name}">
+            </option>
+        </select>
+    </div>
+
+    <button type="submit">
+        Сохранить
+    </button>
+
+</form>
+
+</body>
+</html>
