@@ -11,6 +11,23 @@
 
 <h1>Каталог фильмов</h1>
 
+<form th:action="@{/}" method="get" id="searchForm">
+
+    <input type="text"
+           id="searchInput"
+           name="query"
+           th:value="${query}"
+           placeholder="Название, описание или жанр"
+           autocomplete="off">
+
+    <button type="submit">Найти</button>
+
+    <button type="button" id="clearSearch">
+        Сбросить
+    </button>
+
+</form>
+
 <a href="/movies/new">
     Добавить фильм
 </a>
@@ -30,7 +47,7 @@
 
     <tbody>
 
-    <tr th:each="movie : ${movies}">
+    <tr th:each="movie : ${movies}" class="movie-row">
 
         <td th:text="${movie.title}"></td>
 
@@ -41,6 +58,12 @@
         <td th:text="${movie.director}"></td>
 
         <td th:text="${movie.actors}"></td>
+
+        <td th:text="${movie.description}"
+            class="movie-description"
+            style="display: none;">
+
+        </td>
 
         <td>
 
@@ -59,6 +82,31 @@
     </tbody>
 
 </table>
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const clearSearchButton = document.getElementById("clearSearch");
+    const movieRows = document.querySelectorAll(".movie-row");
+
+    searchInput.addEventListener("input", function () {
+        const query = searchInput.value.trim().toLowerCase();
+
+        movieRows.forEach(function (row) {
+            const movieText = row.textContent.toLowerCase();
+
+            row.style.display = movieText.includes(query) ? "" : "none";
+        });
+    });
+
+    clearSearchButton.addEventListener("click", function () {
+        searchInput.value = "";
+
+        movieRows.forEach(function (row) {
+            row.style.display = "";
+        });
+
+        searchInput.focus();
+    });
+</script>
 
 </body>
 </html>

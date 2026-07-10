@@ -19,22 +19,21 @@
 
     <div>
         <label>Название:</label>
-        <input type="text" th:field="*{title}">
+        <input type="text" th:field="*{title}" required>
     </div>
 
     <div>
         <label>Год:</label>
-        <input type="number" th:field="*{year}">
+        <input type="number" th:field="*{year}" min="1895" max="2026">
     </div>
 
-    <div>
-        <label>Режиссер:</label>
-        <input type="text" th:field="*{director}">
+    <label>Режиссер:</label>
+        <input type="text" th:field="*{director}" pattern="[^\d]*" required>
     </div>
 
     <div>
         <label>Главные актеры:</label>
-        <input type="text" th:field="*{actors}">
+        <input type="text" th:field="*{actors}" pattern="[^\d]*">
     </div>
 
     <div>

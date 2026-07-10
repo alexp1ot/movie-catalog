@@ -5,6 +5,7 @@ import com.example.moviecatalog.service.MovieService;
 import org.springframework.stereotype.Controller; //контроллер для обработки запросов
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;//обработка get запросов
+import org.springframework.web.bind.annotation.RequestParam;
 
 //контроллер приложения отвечающитй за отображение главной страницы
 
@@ -17,10 +18,17 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(
+            @RequestParam(name = "query", required = false) String query,
+            Model model) {
 
-        //получаю все фильмы из базы  передаю их в шаблон
-        model.addAttribute("movies", movieService.findAll());
+        //если есть поисковый запрос, сервис вернет совпадения
+        //если запроса нет, сервис вернет все фильмы
+        model.addAttribute("movies", movieService.search(query));
+
+        //возвращаю запрос обратно в html,
+        //чтобы после поиска текст оставался в поле
+        model.addAttribute("query", query);
 
         return "index";
     }

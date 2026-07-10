@@ -32,6 +32,16 @@ public class MovieService {
         return movieRepository.findById(id).orElse(null);
     }
 
+    //поиск фильма по названию, описанию или жанру
+    public List<Movie> search(String query) {
+
+        if (query == null || query.isBlank()) {
+            return movieRepository.findAll();
+        }
+
+        return movieRepository.search(query.trim());
+    }
+
     //удаление по id
     public void deleteById(Long id) {
         movieRepository.deleteById(id);
